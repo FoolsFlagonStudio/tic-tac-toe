@@ -1,5 +1,5 @@
-require_relative "./lib/board"
+require_relative "lib/game.rb"
 
-game_board = Board.new
+game = Game.new()
 
-game_board.print_board
+game.play_game

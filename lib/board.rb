@@ -11,6 +11,10 @@ class Board
         end
     end
 
+    def get_size
+        return @board[0].length
+    end
+
     def update_board(position, symbol)
         # check if value provided is valid for given board
         if !position.between?(1, 9)
@@ -24,5 +28,29 @@ class Board
         end
         # if it is an integer it can be taken and we update the value to the players symbol
         @board[position / @board[0].length][position % @board[0].length] = symbol
+    end
+
+    def check_tie?
+        return @board.all? { |row| row.all?(String) }
+    end
+
+    def check_win?(ps)
+        n = get_size()
+        target = ps
+
+         # Check rows
+        row_match = @board.any? { |row| row.all? { |cell| cell == ps } }
+
+        # Check columns (using transpose)
+        col_match = @board.transpose.any? { |col| col.all? { |cell| cell == ps } }
+
+        # Check main diagonal (top-left to bottom-right)
+        main_diag = (0...n).all? { |i| @board[i][i] == ps }
+
+        # Check anti-diagonal (top-right to bottom-left)
+        anti_diag = (0...n).all? { |i| @board[i][n - 1 - i] == ps }
+
+        return row_match || col_match || main_diag || anti_diag
+            
     end
 end

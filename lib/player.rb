@@ -16,4 +16,8 @@ class Player
         @symbol = s 
         @@player_symbols << s
     end
+
+    def to_h
+    { name: @name, symbol: @symbol }
+  end
 end
